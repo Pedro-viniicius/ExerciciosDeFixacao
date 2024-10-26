@@ -143,7 +143,6 @@ void exibirMenu() {
 
 int main(){
     exibirMenu();
-    printf("teste");
     return 0;
 
 }
