@@ -1,0 +1,122 @@
+@startuml
+
+entity Pessoa {
+  +CPF : varchar(11) <<PK>>
+  Nome : varchar(100)
+  DataNascimento : date
+  EstadoCivil : varchar(20)
+}
+
+entity Telefone {
+  +idTelefone : int <<PK>>
+  idPessoa : varchar(11) <<FK>>
+  Numero : varchar(15)
+}
+
+entity Endereco {
+  +idEndereco : int <<PK>>
+  idPessoa : varchar(11) <<FK>>
+  Rua : varchar(100)
+  Numero : varchar(10)
+  Bairro : varchar(50)
+  Cidade : varchar(50)
+  CEP : varchar(10)
+}
+
+entity Membros {
+  +idMembro : int <<PK>>
+  idPessoa : varchar(11) <<FK>>
+  DataDeMembresia : date
+  Escolaridade : varchar(50)
+  Profissao : varchar(50)
+}
+
+entity LideresServos {
+  +idLiderServo : int <<PK>>
+  idPessoa : varchar(11) <<FK>>
+  idCargo : int <<FK>>
+}
+
+entity Igreja {
+  +idIgreja : int <<PK>>
+  Nome : varchar(100)
+}
+
+entity TransacaoFinanceira {
+  +idTransacao : int <<PK>>
+  idIgreja : int <<FK>>
+  Tipo : varchar(50)
+  Valor : decimal(10,2)
+  Data : date
+}
+
+entity Evento {
+  +idEvento : int <<PK>>
+  idIgreja : int <<FK>>
+  NomeEvento : varchar(100)
+  Data : date
+  Descricao : varchar(255)
+}
+
+entity RegistroFrequencia {
+  +idRegistro : int <<PK>>
+  idMembro : int <<FK>>
+  idEvento : int <<FK>>
+  Data : date
+  Presente : boolean
+}
+
+entity Dizimo {
+  +idDizimo : int <<PK>>
+  idPessoa : varchar(11) <<FK>>
+  Valor : decimal(10,2)
+  Data : date
+  Observacao : varchar(255)
+}
+
+entity Oferta {
+  +idOferta : int <<PK>>
+  idPessoa : varchar(11) <<FK>>
+  Valor : decimal(10,2)
+  Data : date
+  Observacao : varchar(255)
+}
+
+entity Ministerio {
+  +idMinisterio : int <<PK>>
+  NomeMinisterio : varchar(100)
+  Descricao : varchar(255)
+}
+
+entity Cargo {
+  +idCargo : int <<PK>>
+  NomeCargo : varchar(100)
+  Descricao : varchar(255)
+}
+
+entity ProjetosSociais {
+  +idProjeto : int <<PK>>
+  idIgreja : int <<FK>>
+  NomeProjeto : varchar(100)
+  Descricao : varchar(255)
+  DataInicio : date
+  DataFim : date
+}
+
+Pessoa ||--o{ Telefone : possui
+Pessoa ||--o{ Endereco : reside_em
+Pessoa ||--o{ Membros : é
+Pessoa ||--o{ LideresServos : é
+LideresServos ||--|| Cargo : possui
+Igreja ||--o{ TransacaoFinanceira : realiza
+Igreja ||--o{ Evento : organiza
+Membros ||--o{ RegistroFrequencia : possui
+Evento ||--o{ RegistroFrequencia : possui
+Pessoa ||--o{ Dizimo : doa
+Pessoa ||--o{ Oferta : contribui
+LideresServos ||--o{ Ministerio : coordena
+Membros ||--o{ Ministerio : participa_de
+Igreja ||--o{ ProjetosSociais : organiza
+Pessoa ||--o{ ProjetosSociais : voluntaria_se
+
+@enduml
